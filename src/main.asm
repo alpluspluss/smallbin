@@ -1,13 +1,13 @@
-BITS 32
+BITS 64
     org     0x00010000
             db 0x7F, "ELF"
-_start:     mov     al, 4
-            xor     ebx, ebx
-            inc     ebx
-            mov     ecx, msg
-            mov     dl, 14
-            int     0x80
-            mov     al, 1
-            dec     ebx
-            int     0x80
+_start:     mov     al, 1
+            mov     dil, 1
+            mov     rsi, msg
+            mov     dl, 14 ; len
+            syscall
+            
+            xor     dil, dil    ; status 0
+            mov     al, 60      ; sysexit
+            syscall
 msg:        db      'Hello, World!', 0xa
