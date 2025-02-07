@@ -4,10 +4,10 @@ BITS 64
 _start:     mov     al, 1
             mov     dil, 1
             mov     rsi, msg
-            mov     dl, 14 ; len
-            syscall
+            mov     dl, 14
+            syscall 
             
-            xor     dil, dil    ; status 0
-            mov     al, 60      ; sysexit
+            xor     dil, dil
+            mov     al, 60
             syscall
 msg:        db      'Hello, World!', 0xa

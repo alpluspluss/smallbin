@@ -22,13 +22,6 @@ jobs:
         nasm -f bin -o build/smol src/main.asm
         chmod +x build/smol
         
-    - name: Execute
-      continue-on-error: true
-      run: |
-        if ! ./build/smol; then
-          echo "::warning::Binary execution failed, but continuing workflow"
-        fi
-        
     - name: Verify Size
       run: |
         SIZE=$(stat -c%s build/smol)

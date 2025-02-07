@@ -5,15 +5,6 @@
 
 The smallest possible ELF binary that prints "Hello, World!"
 
-## Building
-```bash
-nasm -f bin -o hello tiny.asm
-chmod +x hello
-```
+## Note
 
-## Running
-```bash
-./hello
-```
-
-Note: This is a highly optimized ELF binary that might need specific conditions to run. It's recommended to run it in a Linux environment.
+This couldn't be run on any platform, at least that I know of
