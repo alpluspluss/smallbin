@@ -1,0 +1,33 @@
+name: smol ELF
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install NASM
+      run: sudo apt-get install -y nasm
+      
+    - name: Build Binary
+      run: |
+        mkdir build
+        nasm -f bin -o build/smol src/main.asm
+        chmod +x build/smol
+        
+    - name: Verify Size
+      run: |
+        ls -l hello
+        
+    - name: Upload Binary
+      uses: actions/upload-artifact@v4
+      with:
+        name: hello-world-tiny
+        path: hello
