@@ -13,21 +13,32 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - name: Install NASM
+    - name: Install Deps
       run: sudo apt-get install -y nasm
       
-    - name: Build Binary
+    - name: Build
       run: |
         mkdir build
         nasm -f bin -o build/smol src/main.asm
         chmod +x build/smol
         
+    - name: Execute
+      continue-on-error: true
+      run: |
+        if ! ./build/smol; then
+          echo "::warning::Binary execution failed, but continuing workflow"
+        fi
+        
     - name: Verify Size
       run: |
-        ls -l hello
+        SIZE=$(stat -c%s build/smol)
+        echo "Binary size: $SIZE bytes"
+        if [ $SIZE -gt 100 ]; then
+          echo "::warning::Binary is larger than 100 bytes!"
+        fi
         
     - name: Upload Binary
       uses: actions/upload-artifact@v4
       with:
-        name: hello-world-tiny
-        path: hello
+        name: smol-elf
+        path: build/smol
